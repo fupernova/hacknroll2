@@ -1,8 +1,10 @@
 import castleScene from "./castle.js";
+import introScene from "./intro.js";
 
 // Our game scene
 var scene = new Phaser.Scene("game");
 var castle = new castleScene();
+var intro =  new introScene();
 var config = {
   type: Phaser.AUTO,
   width: 1080,
@@ -16,7 +18,8 @@ var config = {
 var game = new Phaser.Game(config);
 
 // Load scene
+game.scene.add("introScene", intro);
 game.scene.add("castlescene", castle);
 
 // Boot scene
-game.scene.start("castlescene");
+game.scene.start("introScene");
