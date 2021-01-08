@@ -59,7 +59,7 @@ class castleScene extends Phaser.Scene {
     var bg = this.add.image(540, 305, "room");
     this.door = this.physics.add.image(30, 350, "door");
 
-    this.manWalk = this.physics.add.sprite(500, 400, "character_walk", 6);
+    this.manWalk = this.physics.add.sprite(400, 400, "character_walk", 6);
     this.manWalk.setCollideWorldBounds(true);
 
     this.manAttack = this.physics.add.sprite(this.manWalk.x, this.manWalk.y, "character_attack" , 6);
@@ -80,18 +80,6 @@ class castleScene extends Phaser.Scene {
       key: "attackRight",
       frames: this.anims.generateFrameNumbers("character_attack", { start: 6, end: 11 }),
       frameRate: 20,
-    });
-
-    this.anims.create({
-      key: "walkLeft",
-      frames: this.anims.generateFrameNumbers("character_walk", { start: 0, end: 5 }),
-      frameRate: 10,
-    });
-
-    this.anims.create({
-      key: "walkRight",
-      frames: this.anims.generateFrameNumbers("character_walk", { start: 6, end: 11 }),
-      frameRate: 10,
     });
 
 	this.anims.create({
@@ -116,12 +104,12 @@ class castleScene extends Phaser.Scene {
     this.scene.switch('grassScene');
     this.scene.sleep('gameUI');
     this.scene.remove('castlescene');
-    
   }
 
   update() {
 
     this.manWalk.body.setVelocity(0);
+
     this.physics.add.overlap(this.manWalk, this.door, this.transition, false, this);
 
     if (this.cursors.left.isDown) {

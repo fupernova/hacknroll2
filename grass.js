@@ -11,6 +11,10 @@ class grassScene extends Phaser.Scene {
         "room1",
         "assets/backgrounds/PNG/Grass/grass crop.png"
       );
+      this.load.image(
+        "castle",
+        "assets/sprite/PNG/Castle/castle.png"
+      );
       this.load.spritesheet("character_attack1", "assets/sprite/spritesheets/attack_spritesheet.png", {
         frameWidth: 102,
         frameHeight: 128,
@@ -23,10 +27,24 @@ class grassScene extends Phaser.Scene {
 
     create() {
       this.scene.run("gameUI");
-      var bg = this.add.image(500, 300, "room1");
+      var bg = this.add.image(540, 305, "room1");
+      this.castle = this.physics.add.image(950, 300, "castle");
+
       this.man = this.physics.add.sprite(200, 100, "character_attack1", 6);
       this.man.setCollideWorldBounds(true);
       
+      this.anims.create({
+        key: "walkLeft",
+        frames: this.anims.generateFrameNumbers("character_walk1", { start: 0, end: 5 }),
+        frameRate: 10,
+      });
+  
+      this.anims.create({
+        key: "walkRight",
+        frames: this.anims.generateFrameNumbers("character_walk1", { start: 6, end: 11 }),
+        frameRate: 10,
+      });
+
       this.anims.create({
         key: "attackGrass",
         frames: this.anims.generateFrameNumbers("character_attack1", {
@@ -41,8 +59,16 @@ class grassScene extends Phaser.Scene {
       );
     }
   
+    transition() {
+        this.scene.switch('castlescene');
+        this.scene.sleep('gameUI');
+        this.scene.remove('grassScene');
+      }
+
     update() {
       this.man.body.setVelocity(0);
+
+      this.physics.add.overlap(this.man, this.castle, this.transition, false, this);
 
       if (this.cursors.left.isDown) {
 
