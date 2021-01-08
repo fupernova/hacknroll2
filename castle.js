@@ -54,6 +54,7 @@ class castleScene extends Phaser.Scene {
 		await this.sleep(2000);
     }
   }
+  
   create() {
     this.scene.run("gameUI");
     var bg = this.add.image(540, 305, "room");
@@ -82,18 +83,6 @@ class castleScene extends Phaser.Scene {
       frameRate: 20,
     });
 
-    this.anims.create({
-      key: "walkLeft",
-      frames: this.anims.generateFrameNumbers("character_walk", { start: 0, end: 5 }),
-      frameRate: 10,
-    });
-
-    this.anims.create({
-      key: "walkRight",
-      frames: this.anims.generateFrameNumbers("character_walk", { start: 6, end: 11 }),
-      frameRate: 10,
-    });
-
 	this.anims.create({
       key: "sir_idle",
       frames: this.anims.generateFrameNumbers("sir", {
@@ -113,15 +102,15 @@ class castleScene extends Phaser.Scene {
   }
 
   transition() {
-    this.scene.switch('grassScene');
+    this.scene.switch('gameOverScene');
     this.scene.sleep('gameUI');
     this.scene.remove('castlescene');
-    
   }
 
   update() {
 
     this.manWalk.body.setVelocity(0);
+
     this.physics.add.overlap(this.manWalk, this.door, this.transition, false, this);
 
     if (this.cursors.left.isDown) {

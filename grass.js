@@ -11,51 +11,34 @@ class grassScene extends Phaser.Scene {
         "room1",
         "assets/backgrounds/PNG/Grass/grass crop.png"
       );
-      this.load.spritesheet("character_attack1", "assets/sprite/spritesheets/attack_spritesheet.png", {
-        frameWidth: 204,
-        frameHeight: 256,
-      });
+      this.load.image(
+        "castle",
+        "assets/sprite/PNG/Castle/castle.png"
+      );
       this.load.spritesheet("character_walk1", "assets/sprite/spritesheets/walk_spritesheet.png", {
-        frameWidth: 102,
-        frameHeight: 128
-      });
-      this.load.spritesheet("enemy", "assets/sprite/spritesheets/King/NoBkgColor/spr_KingIdle_strip_no_bkg.png", {
-        frameWidth: 256,
+        frameWidth: 204,
         frameHeight: 256
       });
-      this.load.spritesheet("enemy_attack", "assets/sprite/spritesheets/king_attack.png", {
-        frameWidth: 390,
-        frameHeight: 312
-      })
     }
 
     create() {
       this.scene.run("gameUI");
-      var bg = this.add.image(500, 300, "room1");
-      this.man = this.physics.add.sprite(200, 270, "character_attack1", 6);
-      this.man.setCollideWorldBounds(true);
+      var bg = this.add.image(540, 305, "room1");
+      this.castle = this.physics.add.image(870, 300, "castle");
 
-      this.enemy = this.physics.add.sprite(700, 300, "enemy", 6);
-      this.enemy.setCollideWorldBounds(true);
-      this.enemyAttack = this.physics.add.sprite(700, 300, "enemy_attack", 0);
-      this.enemy.setCollideWorldBounds(true);
+      this.man = this.physics.add.sprite(550, 320, "character_walk1", 6);
+      this.man.setCollideWorldBounds(true);
       
       this.anims.create({
-        key: "man_attack",
-        frames: this.anims.generateFrameNumbers("character_attack1", {
-          start: 6,
-          end: 11
-        }),
-        frameRate: 10
+        key: "walkLeft",
+        frames: this.anims.generateFrameNumbers("character_walk1", { start: 0, end: 5 }),
+        frameRate: 10,
       });
-
+  
       this.anims.create({
-        key: "enemy_attack",
-        frames: this.anims.generateFrameNumbers("enemy_attack", {
-          start: 0,
-          end: 57
-        }),
-        frameRate: 10
+        key: "walkRight",
+        frames: this.anims.generateFrameNumbers("character_walk1", { start: 6, end: 11 }),
+        frameRate: 10,
       });
 
       this.cursors = this.input.keyboard.createCursorKeys();
@@ -64,21 +47,16 @@ class grassScene extends Phaser.Scene {
       );
     }
   
-    update() {
-
-      if (this.spacebar.isDown) {
-
-        this.man.anims.play("man_attack", true);
-
+    transition() {
+        this.scene.switch('castlescene');
+        this.scene.sleep('gameUI');
+        this.scene.remove('grassScene');
       }
 
-      this.enemy.disableBody(true, true);
-      this.enemyAttack.enableBody(true, this.enemy.x, this.enemy.y, true, true);
-      this.enemyAttack.anims.play("enemy_attack", true);
+    update() {
 
+      this.physics.add.overlap(this.man, this.castle, this.transition, false, this);
 
-
-      /*
       if (this.cursors.left.isDown) {
 
         // this.manAttack.disableBody(true, true);
@@ -118,6 +96,11 @@ class grassScene extends Phaser.Scene {
         this.man.anims.play("walkLeft", true);
 
         right = false;
+
+      } else {
+
+        this.man.setVelocityY(0);
+
       }
 
       if (this.cursors.down.isDown && right) {
@@ -136,7 +119,6 @@ class grassScene extends Phaser.Scene {
 
         right = false;
       }
-      */
     }
   }
   export default grassScene;
