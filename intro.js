@@ -20,7 +20,7 @@ class introScene extends Phaser.Scene {
       }
 
       clickButton() {
-        this.scene.switch('battleScene');
+        this.scene.switch('grassScene');
     }
 }
 

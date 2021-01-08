@@ -73,7 +73,7 @@ class battleScene extends Phaser.Scene {
 	}
 
 	startBattle() {
-		
+
 	}
 
 	transition() {
@@ -81,9 +81,6 @@ class battleScene extends Phaser.Scene {
 	}
 
 	update() {
-
-		if (this.)
-
 
 	}
 }
