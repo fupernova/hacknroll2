@@ -13,10 +13,6 @@ class grassScene extends Phaser.Scene {
         // map in json format
         this.load.tilemapTiledJSON('map', 'assets/map/map.json');
 
-    //   this.load.image(
-    //     "room1",
-    //     "assets/backgrounds/PNG/Grass/grass crop.png"
-    //   );
       this.load.image(
         "castle",
         "assets/sprite/PNG/Castle/castle.png"
@@ -46,7 +42,6 @@ class grassScene extends Phaser.Scene {
       // make all tiles in obstacles collidable
       obstacles.setCollisionByExclusion([-1]);
 
-      //var bg = this.add.image(540, 305, "room1");
       this.castle = this.physics.add.image(950, 300, "castle");
 
       this.man = this.physics.add.sprite(200, 100, "character_attack1", 6);
@@ -79,6 +74,39 @@ class grassScene extends Phaser.Scene {
       this.spacebar = this.input.keyboard.addKey(
         Phaser.Input.Keyboard.KeyCodes.SPACE
       );
+
+      // where the enemies will be
+      this.spawns = this.physics.add.group({ classType: Phaser.GameObjects.Zone });
+      for(var i = 0; i < 30; i++) {
+          var x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
+          var y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
+          // parameters are x, y, width, height
+          this.spawns.create(x, y, 20, 20);            
+      }        
+      // add collider
+      this.physics.add.overlap(this.man, this.spawns, this.onMeetEnemy, false, this);
+      // we listen for 'wake' event
+      this.sys.events.on('wake', this.wake, this);
+    }
+
+    wake() {
+      this.cursors.left.reset();
+      this.cursors.right.reset();
+      this.cursors.up.reset();
+      this.cursors.down.reset();
+    }
+
+    onMeetEnemy(player, zone) {        
+      // we move the zone to some other location
+      zone.x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
+      zone.y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
+      
+      // shake the world
+      this.cameras.main.shake(300);
+      
+      this.input.stopPropagation();
+      // start battle 
+      //this.scene.switch('BattleScene');                
     }
   
     transition() {
