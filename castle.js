@@ -5,6 +5,9 @@ class castleScene extends Phaser.Scene {
   constructor() {
     super({ key: "castlescene" });
   }
+  sleep(ms) {
+    return new Promise((resolve)=>setTimeout(resolve, ms));
+  }
   init() {
 	  this.content = [
       "That quill...You are Drezen's son? This means....",
@@ -102,6 +105,7 @@ class castleScene extends Phaser.Scene {
     });
     this.king.play("sir_idle");
 	
+    this.physics.add.overlap(this.manWalk, this.king, this.printText, false, this);
     this.cursors = this.input.keyboard.createCursorKeys();
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
