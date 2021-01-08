@@ -5,13 +5,21 @@ class castleScene extends Phaser.Scene {
   constructor() {
     super({ key: "castlescene" });
   }
-  init() {}
+  init() {
+	  this.content = [
+      "That quill...You are Drezen's son? This means....",
+      "I am so sorry for the loss of your father.",
+      "However, there is little time to grieve. An evil threat looms over the kingdom, and war is imminent.",
+      "You have arrived just in time. Come, let us speak in private.",
+    ];
+  }
 
   preload() {
     this.load.image(
       "room",
       "assets/backgrounds/PNG/Battleground2/Bright/Battleground2.png"
     );
+	this.load.image("chat", "assets/backgrounds/chat-bg.png");
     this.load.image(
       "door",
       "assets/sprite/PNG/Door/door.png"
@@ -24,8 +32,25 @@ class castleScene extends Phaser.Scene {
       frameWidth: 102,
       frameHeight: 128
     });
+	this.load.spritesheet(
+      "sir",
+      "assets/sprite/spritesheets/sir_spritesheet_resize.png",
+      { frameWidth: 460.8, frameHeight: 256 }
+    );
   }
 
+	async printText() {
+		var bg = this.add.image(525, 80, "chat");
+		await this.sleep(100);
+		for (var i = 0; i < this.content.length; i++) {
+			this.add.text(32, 32 + i * 20, this.content[i] + "\n", {
+			fontFamily: "Quicksand",
+			fontSize: "25px",
+			fill: "#000000",
+		});
+		await this.sleep(2000);
+    }
+  }
   create() {
     this.scene.run("gameUI");
     var bg = this.add.image(540, 305, "room");
@@ -38,6 +63,10 @@ class castleScene extends Phaser.Scene {
     this.manAttack.setCollideWorldBounds(true);
     this.manAttack.disableBody(true, true);
 
+    // King
+    this.king = this.physics.add.sprite(990, 400, "sir", 0);
+    this.king.setCollideWorldBounds(true);
+	
     this.anims.create({
       key: "attackLeft",
       frames: this.anims.generateFrameNumbers("character_attack", { start: 0, end: 5 }),
@@ -62,6 +91,17 @@ class castleScene extends Phaser.Scene {
       frameRate: 10,
     });
 
+	this.anims.create({
+      key: "sir_idle",
+      frames: this.anims.generateFrameNumbers("sir", {
+        start: 1,
+        end: 8,
+      }),
+      frameRate: 5,
+      repeat: -1,
+    });
+    this.king.play("sir_idle");
+	
     this.cursors = this.input.keyboard.createCursorKeys();
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
