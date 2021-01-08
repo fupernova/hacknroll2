@@ -9,6 +9,10 @@ class castleScene extends Phaser.Scene {
       "room",
       "assets/backgrounds/PNG/Battleground2/Bright/Battleground2.png"
     );
+    this.load.image(
+      "door",
+      "assets/sprite/PNG/Door/door.png"
+    )
     this.load.spritesheet("character", "assets/attack_spritesheet-0.png", {
       frameWidth: 128,
       frameHeight: 128,
@@ -19,7 +23,9 @@ class castleScene extends Phaser.Scene {
     });
   }
   create() {
+    this.scene.run("gameUI");
     var bg = this.add.image(540, 305, "room");
+    this.door = this.physics.add.image(30, 350, "door");
     this.man = this.physics.add.sprite(200, 100, "character", 0);
     this.man.setCollideWorldBounds(true);
 
@@ -37,7 +43,16 @@ class castleScene extends Phaser.Scene {
     );
   }
 
+  transition() {
+    this.scene.switch('grassScene');
+    this.scene.sleep('gameUI');
+    this.scene.remove('castlescene');
+    
+  }
+
   update() {
+    this.physics.add.overlap(this.man, this.door, this.transition, false, this);
+
     this.man.body.setVelocity(0);
     if (this.cursors.left.isDown) {
       this.man.setVelocityX(-160);
@@ -56,6 +71,7 @@ class castleScene extends Phaser.Scene {
     if (this.spacebar.isDown) {
       this.man.anims.play("attack", true);
     }
+
   }
 }
 export default castleScene;
