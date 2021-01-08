@@ -101,7 +101,7 @@ class castleScene extends Phaser.Scene {
   }
 
   transition() {
-    this.scene.switch('grassScene');
+    this.scene.switch('gameOverScene');
     this.scene.sleep('gameUI');
     this.scene.remove('castlescene');
   }
