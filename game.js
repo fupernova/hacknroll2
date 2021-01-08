@@ -1,6 +1,10 @@
+import castleScene from "./castle.js";
+import introScene from "./intro.js";
+
 // Our game scene
 var scene = new Phaser.Scene("game");
-
+var castle = new castleScene();
+var intro =  new introScene();
 var config = {
   type: Phaser.AUTO,
   width: 1080,
@@ -13,16 +17,9 @@ var config = {
 // for us
 var game = new Phaser.Game(config);
 
-scene.init = function () {};
+// Load scene
+game.scene.add("introScene", intro);
+game.scene.add("castlescene", castle);
 
-scene.preload = function () {
-  this.load.image(
-    "room",
-    "assets/backgrounds/PNG/Battleground2/Bright/Battleground2.png"
-  );
-};
-
-scene.create = function () {
-  var bg = this.add.sprite(540, 305, "room");
-  //bg.setOrigin(0, 0);
-};
+// Boot scene
+game.scene.start("introScene");
