@@ -1,15 +1,19 @@
 import castleScene from "./castle.js";
-import introScene from "./intro.js";
 
 // Our game scene
 var scene = new Phaser.Scene("game");
 var castle = new castleScene();
-var intro =  new introScene();
 var config = {
   type: Phaser.AUTO,
   width: 1080,
   height: 610,
   scene: scene,
+  physics: {
+    default: "arcade",
+    arcade: {
+      gravity: { y: 0 },
+    },
+  },
 };
 
 // Create the game with our config values
@@ -18,8 +22,7 @@ var config = {
 var game = new Phaser.Game(config);
 
 // Load scene
-game.scene.add("introScene", intro);
 game.scene.add("castlescene", castle);
 
 // Boot scene
-game.scene.start("introScene");
+game.scene.start("castlescene");
