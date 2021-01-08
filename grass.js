@@ -20,15 +20,16 @@ class grassScene extends Phaser.Scene {
         frameHeight: 128
       });
     }
+
     create() {
       this.scene.run("gameUI");
       var bg = this.add.image(500, 300, "room1");
-      this.man = this.physics.add.sprite(200, 100, "character1_attack1", 0);
+      this.man = this.physics.add.sprite(200, 100, "character_attack1", 6);
       this.man.setCollideWorldBounds(true);
       
       this.anims.create({
         key: "attackGrass",
-        frames: this.anims.generateFrameNumbers("character1_attack1", {
+        frames: this.anims.generateFrameNumbers("character_attack1", {
           start: 1,
           end: 3,
         }),
