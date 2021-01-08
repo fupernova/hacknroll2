@@ -1,4 +1,7 @@
+var right = false;
+
 class castleScene extends Phaser.Scene {
+
   constructor() {
     super({ key: "castlescene" });
   }
@@ -9,28 +12,50 @@ class castleScene extends Phaser.Scene {
       "room",
       "assets/backgrounds/PNG/Battleground2/Bright/Battleground2.png"
     );
-    this.load.spritesheet("character", "assets/attack_spritesheet-0.png", {
-      frameWidth: 128,
+    this.load.spritesheet("character_attack", "assets/sprite/spritesheets/attack_spritesheet.png", {
+      frameWidth: 102,
       frameHeight: 128,
     });
-    this.load.spritesheet("dude", "assets/dude.png", {
-      frameWidth: 32,
-      frameHeight: 48,
+    this.load.spritesheet("character_walk", "assets/sprite/spritesheets/walk_spritesheet.png", {
+      frameWidth: 102,
+      frameHeight: 128
     });
   }
+
   create() {
     var bg = this.add.image(540, 305, "room");
-    this.man = this.physics.add.sprite(200, 100, "character", 0);
-    this.man.setCollideWorldBounds(true);
+
+    this.manWalk = this.physics.add.sprite(200, 400, "character_walk", 6);
+    this.manWalk.setCollideWorldBounds(true);
+
+    this.manAttack = this.physics.add.sprite(this.manWalk.x, this.manWalk.y, "character_attack" , 6);
+    this.manAttack.setCollideWorldBounds(true);
+    this.manAttack.disableBody(true, true);
 
     this.anims.create({
-      key: "attack",
-      frames: this.anims.generateFrameNumbers("character", {
-        start: 1,
-        end: 3,
-      }),
+      key: "attackLeft",
+      frames: this.anims.generateFrameNumbers("character_attack", { start: 0, end: 5 }),
+      frameRate: 20,
+    });
+
+    this.anims.create({
+      key: "attackRight",
+      frames: this.anims.generateFrameNumbers("character_attack", { start: 6, end: 11 }),
+      frameRate: 20,
+    });
+
+    this.anims.create({
+      key: "walkLeft",
+      frames: this.anims.generateFrameNumbers("character_walk", { start: 0, end: 5 }),
       frameRate: 10,
     });
+
+    this.anims.create({
+      key: "walkRight",
+      frames: this.anims.generateFrameNumbers("character_walk", { start: 6, end: 11 }),
+      frameRate: 10,
+    });
+
     this.cursors = this.input.keyboard.createCursorKeys();
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
@@ -38,24 +63,82 @@ class castleScene extends Phaser.Scene {
   }
 
   update() {
-    this.man.body.setVelocity(0);
+
+    this.manWalk.body.setVelocity(0);
+
     if (this.cursors.left.isDown) {
-      this.man.setVelocityX(-160);
+
+      // this.manAttack.disableBody(true, true);
+      // this.manWalk.enableBody(true, this.manWalk.x, this.manWalk.y, true, true);
+      this.manWalk.setVelocityX(-160);
+      this.manWalk.anims.play("walkLeft", true);
+
+      right = false;
+
     } else if (this.cursors.right.isDown) {
-      this.man.setVelocityX(160);
+
+      // this.manAttack.disableBody(true, true);
+      // this.manWalk.enableBody(true, this.manWalk.x, this.manWalk.y, true, true);
+      this.manWalk.setVelocityX(160);
+      this.manWalk.anims.play("walkRight", true);
+
+      right = true;
+
     } else {
-      this.man.setVelocityX(0);
+
+      this.manWalk.setVelocityX(0);
+
     }
 
-    if (this.cursors.up.isDown) {
-      this.man.setVelocityY(-160);
+    if (this.cursors.up.isDown && right) {
+
+      // this.manAttack.disableBody(true, true);
+      // this.manWalk.enableBody(true, this.manWalk.x, this.manWalk.y, true, true);
+      this.manWalk.setVelocityY(-160);
+      this.manWalk.anims.play("walkRight", true);
+
+      right = true;
+
+    } else if (this.cursors.up.isDown && !right) {
+
+      this.manWalk.setVelocityY(-160);
+      this.manWalk.anims.play("walkLeft", true);
+
+      right = false;
     }
-    if (this.cursors.down.isDown) {
-      this.man.setVelocityY(160);
+
+    if (this.cursors.down.isDown && right) {
+
+      // this.manAttack.disableBody(true, true);
+      // this.manWalk.enableBody(true, this.manWalk.x, this.manWalk.y, true, true);
+      this.manWalk.setVelocityY(160);
+      this.manWalk.anims.play("walkRight", true);
+
+      right = true;
+
+    } else if (this.cursors.down.isDown && !right) {
+
+      this.manWalk.setVelocityY(160);
+      this.manWalk.anims.play("walkLeft", true);
+
+      right = false;
     }
-    if (this.spacebar.isDown) {
-      this.man.anims.play("attack", true);
+
+    /*
+    if (this.spacebar.isDown && this.manWalk.anims.currentFrame.index > 5) {
+
+      this.manWalk.disableBody(true, true);
+      this.manAttack.enableBody(true, this.manWalk.x, this.manWalk.y, true, true);
+      this.manAttack.anims.play("attackRight", true);
+
+    } else if (this.spacebar.isDown && this.manWalk.anims.currentFrame.index < 6) {
+
+      this.manWalk.disableBody(true, true);
+      this.manAttack.enableBody(true, this.manWalk.x, this.manWalk.y, true, true);
+      this.manAttack.anims.play("attackLeft", true);
+
     }
+    */
   }
 }
 export default castleScene;
