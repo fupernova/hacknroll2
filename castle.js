@@ -32,8 +32,8 @@ class castleScene extends Phaser.Scene {
       frameHeight: 128,
     });
     this.load.spritesheet("character_walk", "assets/sprite/spritesheets/walk_spritesheet.png", {
-      frameWidth: 102,
-      frameHeight: 128
+      frameWidth: 204,
+      frameHeight: 256
     });
 	this.load.spritesheet(
       "sir",
@@ -59,7 +59,7 @@ class castleScene extends Phaser.Scene {
     var bg = this.add.image(540, 305, "room");
     this.door = this.physics.add.image(30, 350, "door");
 
-    this.manWalk = this.physics.add.sprite(500, 400, "character_walk", 6);
+    this.manWalk = this.physics.add.sprite(500, 360, "character_walk", 6);
     this.manWalk.setCollideWorldBounds(true);
 
     this.manAttack = this.physics.add.sprite(this.manWalk.x, this.manWalk.y, "character_attack" , 6);
