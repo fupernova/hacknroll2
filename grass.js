@@ -7,10 +7,16 @@ class grassScene extends Phaser.Scene {
     init() {}
   
     preload() {
-      this.load.image(
-        "room1",
-        "assets/backgrounds/PNG/Grass/grass crop.png"
-      );
+        // map tiles
+        this.load.image('tiles', 'assets/map/spritesheet.png');
+        
+        // map in json format
+        this.load.tilemapTiledJSON('map', 'assets/map/map.json');
+
+    //   this.load.image(
+    //     "room1",
+    //     "assets/backgrounds/PNG/Grass/grass crop.png"
+    //   );
       this.load.image(
         "castle",
         "assets/sprite/PNG/Castle/castle.png"
@@ -27,11 +33,27 @@ class grassScene extends Phaser.Scene {
 
     create() {
       this.scene.run("gameUI");
-      var bg = this.add.image(540, 305, "room1");
+
+      var map = this.make.tilemap({key: 'map'});
+
+      // first parameter is the name of the tilemap in tiled
+      var tiles = map.addTilesetImage('spritesheet', 'tiles');
+        
+      // creating the layers
+      var grass = map.createStaticLayer('Grass', tiles, 0, 0);
+      var obstacles = map.createStaticLayer('Obstacles', tiles, 0, 0);
+      
+      // make all tiles in obstacles collidable
+      obstacles.setCollisionByExclusion([-1]);
+
+      //var bg = this.add.image(540, 305, "room1");
       this.castle = this.physics.add.image(950, 300, "castle");
 
       this.man = this.physics.add.sprite(200, 100, "character_attack1", 6);
       this.man.setCollideWorldBounds(true);
+
+      // don't walk on trees
+      this.physics.add.collider(this.man, obstacles);
       
       this.anims.create({
         key: "walkLeft",
