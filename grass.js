@@ -64,11 +64,11 @@ class grassScene extends Phaser.Scene {
 
       // where the enemies will be
       this.spawns = this.physics.add.group({ classType: Phaser.GameObjects.Zone });
-      for(var i = 0; i < 30; i++) {
+      for(var i = 0; i < 10; i++) {
           var x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
           var y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
           // parameters are x, y, width, height
-          this.spawns.create(x, y, 20, 20);            
+          this.spawns.create(x, y, 10, 10);            
       }        
       // add collider
       this.physics.add.overlap(this.man, this.spawns, this.onMeetEnemy, false, this);
@@ -93,11 +93,11 @@ class grassScene extends Phaser.Scene {
       
       this.input.stopPropagation();
       // start battle 
-      //this.scene.switch('BattleScene');                
+      //this.scene.switch('battleScene');                
     }
   
     transition() {
-        this.scene.switch('castlescene');
+        this.scene.switch('castleScene');
         this.scene.sleep('gameUI');
         this.scene.remove('grassScene');
       }
