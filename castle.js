@@ -8,6 +8,9 @@ class castleScene extends Phaser.Scene {
   sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
+  sleep(ms) {
+    return new Promise((resolve)=>setTimeout(resolve, ms));
+  }
   init() {
     this.content = [
       "King Vlad: That quill...You are Drezen's son? This means....",
@@ -32,6 +35,7 @@ class castleScene extends Phaser.Scene {
         frameHeight: 128,
       }
     );
+<<<<<<< HEAD
     this.load.spritesheet(
       "character_walk",
       "assets/sprite/spritesheets/walk_spritesheet.png",
@@ -41,6 +45,17 @@ class castleScene extends Phaser.Scene {
       }
     );
     this.load.spritesheet(
+=======
+    this.load.spritesheet("character_attack", "assets/sprite/spritesheets/attack_spritesheet.png", {
+      frameWidth: 102,
+      frameHeight: 128,
+    });
+    this.load.spritesheet("character_walk", "assets/sprite/spritesheets/walk_spritesheet.png", {
+      frameWidth: 204,
+      frameHeight: 256
+    });
+	this.load.spritesheet(
+>>>>>>> 842cba9de66058f2022d09e148573e4a20c2ce54
       "sir",
       "assets/sprite/spritesheets/sir_spritesheet_resize.png",
       { frameWidth: 460.8, frameHeight: 256 }
@@ -61,6 +76,7 @@ class castleScene extends Phaser.Scene {
     await this.sleep(1000);
     this.toNextScene();
   }
+<<<<<<< HEAD
 
   hover() {
     this.continueButton.setStyle({ fill: "#b0f" });
@@ -87,12 +103,15 @@ class castleScene extends Phaser.Scene {
     this.scene.remove("castlescene");
   }
 
+=======
+  
+>>>>>>> 842cba9de66058f2022d09e148573e4a20c2ce54
   create() {
     this.scene.run("gameUI");
     var bg = this.add.image(540, 305, "room");
     this.door = this.physics.add.image(30, 350, "door");
 
-    this.manWalk = this.physics.add.sprite(200, 400, "character_walk", 6);
+    this.manWalk = this.physics.add.sprite(500, 360, "character_walk", 6);
     this.manWalk.setCollideWorldBounds(true);
 
     this.manAttack = this.physics.add.sprite(
@@ -126,6 +145,7 @@ class castleScene extends Phaser.Scene {
       frameRate: 20,
     });
 
+<<<<<<< HEAD
     this.anims.create({
       key: "walkLeft",
       frames: this.anims.generateFrameNumbers("character_walk", {
@@ -145,6 +165,9 @@ class castleScene extends Phaser.Scene {
     });
 
     this.anims.create({
+=======
+	this.anims.create({
+>>>>>>> 842cba9de66058f2022d09e148573e4a20c2ce54
       key: "sir_idle",
       frames: this.anims.generateFrameNumbers("sir", {
         start: 1,
@@ -154,7 +177,12 @@ class castleScene extends Phaser.Scene {
       repeat: -1,
     });
     this.king.play("sir_idle");
+<<<<<<< HEAD
 
+=======
+	
+    this.physics.add.overlap(this.manWalk, this.king, this.printText, false, this);
+>>>>>>> 842cba9de66058f2022d09e148573e4a20c2ce54
     this.cursors = this.input.keyboard.createCursorKeys();
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
@@ -169,13 +197,24 @@ class castleScene extends Phaser.Scene {
   }
 
   transition() {
+<<<<<<< HEAD
     this.scene.switch("gameOverScene");
     this.scene.sleep("gameUI");
     this.scene.remove("castlescene");
+=======
+    this.scene.switch('gameOverScene');
+    this.scene.sleep('gameUI');
+    this.scene.remove('castlescene');
+>>>>>>> 842cba9de66058f2022d09e148573e4a20c2ce54
   }
 
   update() {
     this.manWalk.body.setVelocity(0);
+<<<<<<< HEAD
+=======
+
+    this.physics.add.overlap(this.manWalk, this.door, this.transition, false, this);
+>>>>>>> 842cba9de66058f2022d09e148573e4a20c2ce54
 
     if (this.cursors.left.isDown) {
       // this.manAttack.disableBody(true, true);

@@ -37,11 +37,12 @@ var game = new Phaser.Game(config);
 // Load scene
 game.scene.add("dialogueScene", dialogue);
 game.scene.add("introScene", intro);
-game.scene.add("castleScene", castle);
+game.scene.add("battleScene", battle);
 game.scene.add("grassScene", grass);
+game.scene.add("castlescene", castle);
+game.scene.add("gameOverScene", gameOver);
 game.scene.add("gameUI", UI);
 game.scene.add("gameOverScene", gameOver);
-game.scene.add("battleScene", battle);
 
 // Boot scene
 game.scene.start("introScene");
