@@ -2,13 +2,19 @@ import castleScene from "./castle.js";
 import introScene from "./intro.js";
 import gameUI from "./gameUI.js";
 import grassScene from "./grass.js";
+import battleScene from "./battle.js";
+import dialogueScene from "./dialogue.js";
+import gameOverScene from "./gameOver.js";
 
 // Our game scene
 var scene = new Phaser.Scene("game");
-var intro =  new introScene();
+var intro = new introScene();
 var castle = new castleScene();
 var grass = new grassScene();
+var battle = new battleScene();
+var gameOver = new gameOverScene();
 var UI = new gameUI();
+var dialogue = new dialogueScene();
 var config = {
   type: Phaser.AUTO,
   width: 1080,
@@ -29,11 +35,13 @@ var config = {
 var game = new Phaser.Game(config);
 
 // Load scene
-
+game.scene.add("dialogueScene", dialogue);
 game.scene.add("introScene", intro);
-game.scene.add("castlescene", castle);
+game.scene.add("castleScene", castle);
 game.scene.add("grassScene", grass);
 game.scene.add("gameUI", UI);
+game.scene.add("gameOverScene", gameOver);
+game.scene.add("battleScene", battle);
 
 // Boot scene
 game.scene.start("introScene");
