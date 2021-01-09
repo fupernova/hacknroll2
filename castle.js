@@ -9,7 +9,7 @@ class castleScene extends Phaser.Scene {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
   sleep(ms) {
-    return new Promise((resolve)=>setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
   init() {
     this.content = [
@@ -90,7 +90,6 @@ class castleScene extends Phaser.Scene {
     this.scene.remove("castlescene");
   }
 
-  
   create() {
     this.scene.run("gameUI");
     var bg = this.add.image(540, 305, "room");
@@ -130,7 +129,25 @@ class castleScene extends Phaser.Scene {
       frameRate: 20,
     });
 
-	this.anims.create({
+    this.anims.create({
+      key: "walkLeft",
+      frames: this.anims.generateFrameNumbers("character_walk", {
+        start: 0,
+        end: 5,
+      }),
+      frameRate: 10,
+    });
+
+    this.anims.create({
+      key: "walkRight",
+      frames: this.anims.generateFrameNumbers("character_walk", {
+        start: 6,
+        end: 11,
+      }),
+      frameRate: 10,
+    });
+
+    this.anims.create({
       key: "sir_idle",
       frames: this.anims.generateFrameNumbers("sir", {
         start: 1,
@@ -140,8 +157,6 @@ class castleScene extends Phaser.Scene {
       repeat: -1,
     });
     this.king.play("sir_idle");
-	
-    this.physics.add.overlap(this.manWalk, this.king, this.printText, false, this);
     this.cursors = this.input.keyboard.createCursorKeys();
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
