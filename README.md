@@ -6,7 +6,7 @@ Looking back, you see your town dwarfed by a dark portal that has appeared. The 
 Running back to town, you find your father in the house, with the rest of your family nowhere to be seen. He sees you returning home.
 Father passes you a silver quill and says "This is bad. Hide, then bring this to King Vlad in the capital city of Holmburg. You must not fail!" 
 He ignores your protests and pushes you into the hidden storage compartment behind your kitchen larder.
-ou hear the sound of your father unsheathing his sword and opening the house door. The next few minutes are filled with screams and fire burning. 
+You hear the sound of your father unsheathing his sword and opening the house door. The next few minutes are filled with screams and fire burning. 
 Then...silence. You know what has happened and starts weeping...
 An hour passes, and your sorrow becomes anger and determination. You swear to go to Holmburg and inform the king of this threat. More importantly, you swear to avenge your family.
 The Scourge of Azzaos has just begun.
